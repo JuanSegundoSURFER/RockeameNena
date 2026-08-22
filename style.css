@@ -443,25 +443,55 @@
     footer ul li{ margin-bottom:8px; }
     footer ul a{ font-size:.72rem; }
 
-    /* Imagen del hero: se ve completa, debajo del texto, sin taparlo */
-    .hero-modelo{
-      display:block;
-      position: static;
-      width: 62%;
-      max-width: 240px;
-      max-height: none;
-      opacity: 1;
-      margin: 10px auto 0;
-      pointer-events: none;
-    }
-    .hero{ overflow: visible; padding-bottom: 20px; }
-
+    /* ===== HERO MÓVIL: blanco, compacto, imagen como gancho ===== */
     section{ padding: 60px 0; }
-    .hero{ padding-top: 90px; }
-    .hero-actions{ flex-direction:column; gap:12px; }
+
+    .hero{
+      background: var(--blanco);
+      padding: 40px 24px 26px;
+      overflow: visible;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    /* Hace reordenables los elementos del hero en celular */
+    .hero-intro{ display: contents; }
+
+    .hero .eyebrow{ order:1; color:#444; font-size:.68rem; letter-spacing:.15em; margin:0 0 10px; }
+    .hero h1{ order:2; color:var(--negro); margin:0 0 4px; }
+    .hero p{ order:4; color:#555; margin:0 0 20px; }
+    .hero-actions{ order:5; width:100%; flex-direction:column; gap:12px; margin:0 0 22px; }
     .hero-actions .btn-primary,
     .hero-actions .btn-secondary{ width:100%; text-align:center; }
-    .hero-strip{ gap: 26px; padding-bottom: 40px; }
+
+    /* Imagen de la modelo: apenas debajo del título, bien visible */
+    .hero-modelo{
+      order:3;
+      display:block;
+      position: static;
+      width: 64%;
+      max-width: 230px;
+      max-height: none;
+      opacity: 1;
+      margin: 8px auto 14px;
+      pointer-events: none;
+      filter: drop-shadow(0 14px 22px rgba(0,0,0,.16));
+    }
+
+    /* Los 3 datos como tarjetitas suaves */
+    .hero-strip{ order:6; display:block; width:100%; padding-bottom:0; }
+    .strip-item{
+      display:flex; align-items:baseline; justify-content:space-between; gap:16px;
+      background:#F6F5F0;
+      border:1px solid #E7E5DE;
+      border-radius:10px;
+      padding:11px 16px;
+      margin-bottom:8px;
+      text-align:left;
+    }
+    .hero-strip .strip-item b{ font-size:1.3rem; color:var(--negro); }
+    .hero-strip .strip-item span{ color:#6d6a63; }
 
     .brand{ font-size: 1.4rem; }
     .brand-logo{ width: 52px; }
