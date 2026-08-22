@@ -98,7 +98,12 @@
   .contacto-wpp-btn:hover::before{
     animation: shimmer 1.6s ease;
   }
-  .menu-toggle{ display:none; background:none; border:none; font-size:1.6rem; color:var(--blanco); cursor:pointer; line-height:1; padding:6px; }
+  /* Contiene el brillo animado (::before) dentro de cada botón para que
+     no se desborde del borde derecho y genere scroll horizontal en celular */
+  .btn-primary, .btn-secondary, .form-submit, .prod-add, .contacto-wpp-btn{
+    position: relative;
+    overflow: hidden;
+  }
   .nav-actions{ display:flex; align-items:center; gap:10px; }
 
   .hero{
@@ -406,31 +411,9 @@
     .rubro-grid{ padding: 16px; }
   }
 
-  /* ===================== MENÚ MÓVIL (desplegable del header) ===================== */
   @media (max-width:640px){
     .nav{ flex-wrap: wrap; row-gap: 14px; padding: 14px 0; }
     .nav-links,.nav-cta{ display:none; }
-    .menu-toggle{ display:block; }
-
-    .nav-links{
-      order: 5;
-      width: 100%;
-      flex-direction: column;
-      gap: 0;
-    }
-    .nav.mobile-menu-open .nav-links{
-      display: flex;
-    }
-    .nav-links li{ width:100%; border-top:1px solid var(--borde); }
-    .nav-links a{ display:block; padding:16px 4px; font-size:.9rem; }
-
-    .nav-cta{
-      order: 6;
-      width: 100%;
-      text-align: center;
-      margin-top: 4px;
-    }
-    .nav.mobile-menu-open .nav-cta{ display:block; }
 
     .cat-grid{ grid-template-columns:1fr 1fr; }
 
