@@ -59,7 +59,9 @@ function mostrarCategoriasPorRubro(rubro) {
   }
 
   if (rubroDetalleTitulo) {
-    rubroDetalleTitulo.textContent = "Categorías";
+    rubroDetalleTitulo.textContent = rubro === "indumentaria"
+      ? "Catálogo de Indumentaria"
+      : "Catálogo de Accesorios Moda";
   }
 
   document.querySelectorAll(".rubro-card").forEach((rubroCard) => {
@@ -152,7 +154,8 @@ function renderProductos() {
 
     const varianteHtml = tieneVariantes
       ? `<select class="prod-variante" data-id="${producto.id}">
-           ${producto.variantes.map((v) => `<option value="${v}">Modelo/color: ${v}</option>`).join("")}
+           <option value="" disabled selected>Elegí el modelo...</option>
+           ${producto.variantes.map((v) => `<option value="${v}">Modelo: ${v}</option>`).join("")}
          </select>`
       : "";
 
@@ -454,9 +457,15 @@ prodGrid.addEventListener("click", (e) => {
   const id = boton.dataset.id;
   const card = boton.closest(".prod-card");
   const selectVariante = card.querySelector(".prod-variante");
-  const variante = selectVariante ? selectVariante.value : null;
 
-  agregarAlCarrito(id, variante);
+  // Si el producto tiene modelos y todavía no eligió, no agrega nada
+  if (selectVariante && !selectVariante.value) {
+    selectVariante.classList.add("atencion");
+    setTimeout(() => selectVariante.classList.remove("atencion"), 1200);
+    return;
+  }
+
+  agregarAlCarrito(id, selectVariante ? selectVariante.value : null);
 });
 
 // Click en la FOTO de cada producto -> abre la imagen ampliada (lightbox)

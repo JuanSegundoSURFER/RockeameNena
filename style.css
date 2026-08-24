@@ -166,7 +166,7 @@
   }
 
   .hero-strip{ display:flex; justify-content:flex-start; gap:50px; flex-wrap:wrap; padding-bottom: 60px; }
-  .hero-strip .strip-item b{ display:block; font-family:'Cormorant Garamond', serif; font-weight:700; font-size:1.9rem; color: var(--negro); }
+  .hero-strip .strip-item b{ display:block; font-family:'Oswald', sans-serif; font-weight:600; font-size:1.12rem; letter-spacing:.05em; text-transform:uppercase; color: var(--negro); }
   .hero-strip .strip-item span{ font-size:.78rem; color:#6b6b6b; text-transform:uppercase; letter-spacing:.08em; }
 
   /* Foto de la modelo (PNG sin fondo), pegada abajo a la derecha del hero */
@@ -287,7 +287,7 @@
   .prod-body h4{ font-family:'Cormorant Garamond', serif; font-weight:600; font-size:1.25rem; color:var(--blanco); margin-bottom:10px; }
   .prod-card-feature .prod-tag
   .prod-card-feature .prod-body h4{ /* importante: estos dos quedan por encima del estilo general */ }
-  .prod-foot{ display:flex; align-items:center; justify-content:space-between; }
+  .prod-foot{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
   .prod-precio{ font-weight:700; color:var(--plata); }
   .prod-add{
     width:32px; height:32px; background:var(--acento); color:var(--negro);
@@ -458,7 +458,6 @@
     /* Hace reordenables los elementos del hero en celular */
     .hero-intro{ display: contents; }
 
-    .hero .eyebrow{ order:1; color:#444; font-size:.68rem; letter-spacing:.15em; margin:0 0 10px; }
     .hero h1{ order:2; color:var(--negro); margin:0 0 4px; }
     .hero p{ order:4; color:#555; margin:0 0 20px; }
     .hero-actions{ order:5; width:100%; flex-direction:column; gap:12px; margin:0 0 22px; }
@@ -490,7 +489,7 @@
       margin-bottom:8px;
       text-align:left;
     }
-    .hero-strip .strip-item b{ font-size:1.3rem; color:var(--negro); }
+    .hero-strip .strip-item b{ font-size:1.02rem; color:var(--negro); }
     .hero-strip .strip-item span{ color:#6d6a63; }
 
     .brand{ font-size: 1.4rem; }
@@ -503,7 +502,6 @@
   /* Celulares chicos (320–480px): texto del hero más contenido */
   @media (max-width:480px){
     .hero h1{ font-size: clamp(2.1rem, 9vw, 2.8rem); }
-    .hero .eyebrow{ font-size:.68rem; letter-spacing:.15em; }
     .hero p{ font-size:1rem; }
     .cat-grid{ grid-template-columns:1fr 1fr; gap:12px; }
     .rubro-grid{ grid-template-columns:1fr; }
@@ -822,6 +820,7 @@
   font-size: .78rem;
 }
 .prod-variante:focus{ outline:none; border-color: var(--acento); }
+.prod-variante.atencion{ border-color: var(--acento); box-shadow: 0 0 0 1px var(--acento); }
 
 .prod-codigo{
   display:block;
@@ -1213,10 +1212,19 @@
   padding: 4px 9px;
 }
 
-.rubro-detalle-head{
-  text-align: center;
-  margin-bottom: 30px;
-}
+  .rubro-detalle{
+    border-top: 1px solid var(--borde);
+    padding-top: 36px;
+  }
+  .rubro-detalle-head{
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .rubro-detalle-texto{
+    color:#a09da5;
+    font-size:.92rem;
+    margin-top:8px;
+  }
 .rubro-detalle-head .kicker{ color: var(--acento); font-weight:700; letter-spacing:.2em; text-transform:uppercase; font-size: .75rem; margin-bottom:8px; display:block; }
 .rubro-detalle-head h3{ font-size: 1.6rem; color: var(--blanco); }
 
