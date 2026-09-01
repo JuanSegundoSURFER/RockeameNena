@@ -91,9 +91,27 @@ function mostrarCategoriasPorRubro(rubro) {
   document.querySelectorAll(".rubro-card").forEach((rubroCard) => {
     rubroCard.classList.toggle("rubro-activo", rubroCard.dataset.rubro === rubro);
   });
+
+  // Recordamos el rubro elegido (así al volver de una categoría queda seleccionado)
+  sessionStorage.setItem("rn-rubro", rubro);
 }
 
-mostrarCategoriasPorRubro("moda");
+// Al cargar, restauramos el rubro que quedó seleccionado la última vez
+// (así si volvés de una categoría de indumentaria queda elegida indumentaria).
+{
+  const rubroGuardado = sessionStorage.getItem("rn-rubro");
+  const rubroInicial = rubroGuardado === "indumentaria" ? "indumentaria" : "moda";
+  mostrarCategoriasPorRubro(rubroInicial);
+
+  // Si hay un rubro guardado (estás volviendo), bajamos hasta la sección de
+  // categorías para que veas el catálogo con ese rubro seleccionado.
+  if (rubroGuardado === "moda" || rubroGuardado === "indumentaria") {
+    const secCategorias = document.querySelector(".categorias");
+    if (secCategorias) {
+      setTimeout(() => secCategorias.scrollIntoView({ behavior: "smooth", block: "start" }), 60);
+    }
+  }
+}
 
 function productosFiltrados() {
   let lista = PRODUCTOS;

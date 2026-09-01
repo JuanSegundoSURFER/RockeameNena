@@ -192,6 +192,19 @@ if (descripcionEl) {
   descripcionEl.textContent = descripcionCategoria(categoriaActual);
 }
 
+// La flecha de volver vuelve a donde estuviste por última vez
+// (history.back). Si no hay historial (entraste directo a la URL),
+// cae por defecto al catálogo completo de la home.
+const backLink = document.querySelector(".catalogo-back");
+if (backLink) {
+  backLink.addEventListener("click", (e) => {
+    if (window.history.length > 1) {
+      e.preventDefault();
+      history.back();
+    }
+  });
+}
+
 /* =====================================================================
    CARRITO (igual que en la página principal)
    ===================================================================== */

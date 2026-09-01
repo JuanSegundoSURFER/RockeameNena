@@ -74,5 +74,18 @@
   </div>
 </main>
 
+<script>
+  // La flecha de volver regresa a donde estuviste por última vez.
+  // Si no hay historial, cae por defecto a la home (el href original).
+  document.querySelectorAll(".legal-volver").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      if (window.history.length > 1) {
+        e.preventDefault();
+        history.back();
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
