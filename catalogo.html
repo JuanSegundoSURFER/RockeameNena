@@ -51,6 +51,26 @@
   }
   .catalogo-cat-list .cat-card.activo{ border-color: var(--acento); box-shadow: 0 0 0 1px var(--acento); }
 
+  @media (max-width: 640px){
+    .catalogo-cat-list{
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap:12px;
+      padding-bottom: 10px;
+      margin: 0 -16px;
+      padding-left: 16px;
+      padding-right: 16px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .catalogo-cat-list::-webkit-scrollbar{ display:none; }
+    .catalogo-cat-list .cat-card{
+      width:140px;
+      scroll-snap-align: start;
+    }
+  }
+
   /* Encabezado "Estás en: [catálogo]" */
   .catalogo-productos{ padding: 40px 0 70px; }
   .catalogo-actual{
