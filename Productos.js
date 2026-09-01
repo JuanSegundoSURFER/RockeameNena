@@ -79,11 +79,9 @@ const CARPETA_POR_CATEGORIA = {
   "Aros de acero": "ACCESORIOS MODA/AROS",
   "Cuero": "ACCESORIOS MODA/CUERO",
   "Pulseras": "ACCESORIOS MODA/PULSERAS",
-  "Remeras": "ACCESORIOS INDUMENTARIA/REMERAS",
   "Remera personalizada": "ACCESORIOS INDUMENTARIA/REMERAS PERSONALIZADAS",
-  "Remeras Mujer": "ACCESORIOS INDUMENTARIA/REMERAS MUJER",
-  "Remeras Corte Clásico Unisex": "ACCESORIOS INDUMENTARIA/REMERAS CORTE CLASICO UNISEX",
-  "Bandas de Rock": "ACCESORIOS INDUMENTARIA/BANDAS DE ROCK",
+  "Remeras Mujer": "ACCESORIOS INDUMENTARIA/REMERAS",
+  "Remeras Corte Clásico Unisex": "ACCESORIOS INDUMENTARIA/REMERAS",
 };
 
 const PRODUCTOS = [
@@ -413,15 +411,15 @@ const PRODUCTOS = [
   { id: "prod-946-G", nombre: "Anillos Exxtremo", categoria: "Anillos de acero", precio: 9989, precioMayorista: null, codigo: "rn502 - Código G", variantes: [], emoji: "💍", imagen: "rn502-g.jpg" },
   { id: "prod-946-H", nombre: "Anillos Exxtremo", categoria: "Anillos de acero", precio: 9989, precioMayorista: null, codigo: "rn502 - Código H", variantes: [], emoji: "💍", imagen: "rn502-h.jpg" },
   { id: "prod-946-I", nombre: "Anillos Exxtremo", categoria: "Anillos de acero", precio: 9989, precioMayorista: null, codigo: "rn502 - Código I", variantes: [], emoji: "💍", imagen: "rn502-i.jpg" },
-  { id: "prod-701", nombre: "Remera transparente", categoria: "Remeras", precio: 14899, precioMayorista: null, codigo: "rn701", variantes: [], emoji: "👕", imagen: "rn701.jpg" },
-  { id: "prod-702", nombre: "Remera transparente", categoria: "Remeras", precio: 14899, precioMayorista: null, codigo: "rn702", variantes: [], emoji: "👕", imagen: "rn702.jpg" },
-  { id: "prod-703", nombre: "Remera transparente", categoria: "Remeras", precio: 24987, precioMayorista: null, codigo: "rn703", variantes: [], emoji: "👕", imagen: "rn703.jpg" },
-  { id: "prod-704", nombre: "Remera transparente", categoria: "Remeras", precio: 14899, precioMayorista: null, codigo: "rn704", variantes: [], emoji: "👕", imagen: "rn704.jpg" },
-  { id: "prod-705", nombre: "Remera transparente", categoria: "Remeras", precio: 14899, precioMayorista: null, codigo: "rn705", variantes: [], emoji: "👕", imagen: "rn705.jpg" },
-  { id: "prod-706", nombre: "Remera transparente", categoria: "Remeras", precio: 14899, precioMayorista: null, codigo: "rn706", variantes: [], emoji: "👕", imagen: "rn706.jpg" },
-  { id: "prod-707", nombre: "Remera imagen ", categoria: "Remeras", precio: 17000, precioMayorista: null, codigo: "rn707", variantes: [], emoji: "👕", imagen: "rn707.png" },
-  { id: "prod-708", nombre: "Remera imagen ", categoria: "Remeras", precio: 17000, precioMayorista: null, codigo: "rn708", variantes: [], emoji: "👕", imagen: "rn708.png" },
-  { id: "prod-709", nombre: "Top banda ", categoria: "Remeras", precio: 24987, precioMayorista: null, codigo: "rn709", variantes: [], emoji: "👕", imagen: "rn709.png" },
+  { id: "prod-701", nombre: "Remera transparente", categoria: "Remeras Mujer", precio: 14899, precioMayorista: null, codigo: "rn701", variantes: [], emoji: "👕", imagen: "rn701.jpg" },
+  { id: "prod-702", nombre: "Remera transparente", categoria: "Remeras Mujer", precio: 14899, precioMayorista: null, codigo: "rn702", variantes: [], emoji: "👕", imagen: "rn702.jpg" },
+  { id: "prod-703", nombre: "Remera transparente", categoria: "Remeras Mujer", precio: 24987, precioMayorista: null, codigo: "rn703", variantes: [], emoji: "👕", imagen: "rn703.jpg" },
+  { id: "prod-704", nombre: "Remera transparente", categoria: "Remeras Mujer", precio: 14899, precioMayorista: null, codigo: "rn704", variantes: [], emoji: "👕", imagen: "rn704.jpg" },
+  { id: "prod-705", nombre: "Remera transparente", categoria: "Remeras Mujer", precio: 14899, precioMayorista: null, codigo: "rn705", variantes: [], emoji: "👕", imagen: "rn705.jpg" },
+  { id: "prod-706", nombre: "Remera transparente", categoria: "Remeras Mujer", precio: 14899, precioMayorista: null, codigo: "rn706", variantes: [], emoji: "👕", imagen: "rn706.jpg" },
+  { id: "prod-707", nombre: "Remera imagen ", categoria: "Remeras Corte Clásico Unisex", precio: 17000, precioMayorista: null, codigo: "rn707", variantes: [], emoji: "👕", imagen: "rn707.png" },
+  { id: "prod-708", nombre: "Remera imagen ", categoria: "Remeras Corte Clásico Unisex", precio: 17000, precioMayorista: null, codigo: "rn708", variantes: [], emoji: "👕", imagen: "rn708.png" },
+  { id: "prod-709", nombre: "Top banda ", categoria: "Remeras Mujer", precio: 24987, precioMayorista: null, codigo: "rn709", variantes: [], emoji: "👕", imagen: "rn709.png" },
   { id: "prod-remera-personalizada", nombre: "Remera personalizada", categoria: "Remera personalizada", precio: null , precioMayorista: null, codigo: "RN-PP", variantes: [], emoji: "👕", imagen: "remeraper.png", precioTexto: "Precio por medidas: S-XL 15.000, XXL 18.000", infoExtra: "El diseño se acuerda por WhatsApp.", esDestacada: true },
 ];
 

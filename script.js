@@ -35,6 +35,30 @@ let busquedaActual  = "";    // texto del buscador
 const LOTE = 24;             // cuántos productos se muestran por tanda
 let cantidadVisible = LOTE;
 
+// Desplegar / plegar el catálogo completo (Todos los productos)
+const catalogoToggle   = document.getElementById("catalogo-toggle");
+const catalogoShowcase = document.getElementById("catalogo-showcase");
+
+if (catalogoToggle && catalogoShowcase) {
+  catalogoToggle.addEventListener("click", () => {
+    const quedaAbierto = catalogoShowcase.classList.toggle("catalogo-cerrado") === false;
+    catalogoToggle.classList.toggle("activo", quedaAbierto);
+    catalogoToggle.setAttribute("aria-expanded", quedaAbierto);
+    catalogoToggle.setAttribute("aria-label", quedaAbierto ? "Plegar catálogo" : "Desplegar catálogo");
+
+    if (quedaAbierto) {
+      catalogoShowcase.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+
+  // Si venís directo al anclaje #productos (ej: "Ver catálogo"), desplegamos automáticamente
+  if (window.location.hash === "#productos") {
+    catalogoShowcase.classList.remove("catalogo-cerrado");
+    catalogoToggle.classList.add("activo");
+    catalogoToggle.setAttribute("aria-expanded", "true");
+  }
+}
+
 function normalizar(texto) {
   return texto
     .toLowerCase()
@@ -225,11 +249,12 @@ function quitarFiltro() {
   renderProductos();
 }
 
-// Click en una tarjeta de categoría -> filtra los productos
+// Click en una tarjeta de categoría -> abre esa categoría en su propia página
 catGrid.addEventListener("click", (e) => {
   const card = e.target.closest(".cat-card");
   if (!card) return;
-  filtrarPorCategoria(card.dataset.categoria);
+  const categoria = card.dataset.categoria;
+  window.location.href = `catalogo.html?categoria=${encodeURIComponent(categoria)}`;
 });
 
 // Click en cualquiera de los rubros -> baja suave hasta sus categorías

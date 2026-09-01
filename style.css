@@ -223,6 +223,27 @@
   .filtro-activo button:hover{ border-color: var(--acento); }
 
   .productos{ background: var(--negro); }
+  .catalogo-toggle-wrap{
+    text-align:center;
+    margin: -12px 0 48px;
+  }
+  .catalogo-toggle{
+    width:60px; height:60px; border-radius:50%;
+    background: var(--blanco); color: var(--negro);
+    border:none; cursor:pointer;
+    display:inline-flex; align-items:center; justify-content:center;
+    box-shadow: 0 10px 30px rgba(0,0,0,.45);
+    transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
+  }
+  .catalogo-toggle:hover{ transform: translateY(3px); box-shadow: 0 14px 34px rgba(0,0,0,.5); }
+  .catalogo-toggle svg{ transition: transform .35s ease; }
+  .catalogo-toggle.activo svg{ transform: rotate(180deg); }
+  .catalogo-toggle-text{
+    display:block; margin-top:12px;
+    color: var(--plata); font-size:.72rem; font-weight:600;
+    letter-spacing:.14em; text-transform:uppercase;
+  }
+  .catalogo-cerrado{ display:none !important; }
   .prod-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:22px; }
   .prod-card{ background: var(--negro2); border:1px solid #2a2830; transition: transform .35s cubic-bezier(.22,1,.36,1), border-color .35s ease, box-shadow .35s ease; }
   .prod-card:hover{ transform: translateY(-6px); border-color: var(--acento); box-shadow: 0 20px 34px -22px rgba(0,0,0,.55); }

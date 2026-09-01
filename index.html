@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
 
@@ -108,11 +108,9 @@
         <div class="cat-card reveal reveal-stagger" style="--reveal-delay:0.12s" data-categoria="Aros de acero" data-rubro-grupo="moda"><img class="ico" src="Otras%20imgs/arosLOGO.jpeg" alt="Aros"></div>
         <div class="cat-card reveal reveal-stagger" style="--reveal-delay:0.18s" data-categoria="Cuero" data-rubro-grupo="moda"><img class="ico" src="Otras%20imgs/cueroLOGO.jpeg" alt="Cuero"></div>
         <div class="cat-card reveal reveal-stagger" style="--reveal-delay:0.24s" data-categoria="Pulseras" data-rubro-grupo="moda"><img class="ico" src="Otras%20imgs/pulserasLOGO.jpeg" alt="Pulseras"></div>
-        <div class="cat-card reveal reveal-stagger" style="--reveal-delay:0.3s" data-categoria="Remera personalizada" data-rubro-grupo="indumentaria"><span class="ico"></span><div><h3>Remera personalizada</h3><span>Diseño a medida</span></div></div>
-        <div class="cat-card reveal reveal-stagger oculto" style="--reveal-delay:0.36s" data-categoria="Remeras" data-rubro-grupo="indumentaria"><span class="ico"></span><div><h3>Remeras</h3><span>Remeras de malla, bandas y más</span></div></div>
-        <div class="cat-card reveal reveal-stagger" style="--reveal-delay:0.42s" data-categoria="Remeras Mujer" data-rubro-grupo="indumentaria"><span class="ico"></span><div><h3>Remeras Mujer</h3><span>Cortes femeninos</span></div></div>
-        <div class="cat-card reveal reveal-stagger" style="--reveal-delay:0.48s" data-categoria="Remeras Corte Clásico Unisex" data-rubro-grupo="indumentaria"><span class="ico"></span><div><h3>Remeras Corte Clásico</h3><span>Unisex</span></div></div>
-        <div class="cat-card reveal reveal-stagger" style="--reveal-delay:0.54s" data-categoria="Bandas de Rock" data-rubro-grupo="indumentaria"><span class="ico"></span><div><h3>Bandas de Rock</h3><span>Estampas de bandas</span></div></div>
+        <div class="cat-card reveal reveal-stagger" style="--reveal-delay:0.3s" data-categoria="Remera personalizada" data-rubro-grupo="indumentaria"><span class="ico"></span><div><h3>Remeras Personalizadas</h3><span>Diseño a medida</span></div></div>
+        <div class="cat-card reveal reveal-stagger" style="--reveal-delay:0.42s" data-categoria="Remeras Mujer" data-rubro-grupo="indumentaria"><span class="ico"></span><div><h3>Cortes Femeninos</h3><span>Cortes femeninos</span></div></div>
+        <div class="cat-card reveal reveal-stagger" style="--reveal-delay:0.48s" data-categoria="Remeras Corte Clásico Unisex" data-rubro-grupo="indumentaria"><span class="ico"></span><div><h3>Unisex</h3><span>Corte clásico</span></div></div>
       </div>
     </div>
   </div>
@@ -123,26 +121,37 @@
     <div class="section-head reveal">
       <span class="kicker">Catálogo completo</span>
       <h2>Todos los productos</h2>
-      <p>Más de 180 productos disponibles. Buscá o filtrá por categoría.</p>
+      <p>Más de 180 productos disponibles. Apretá para desplegar el catálogo completo.</p>
     </div>
 
-    <div class="buscador-box">
-      <input type="text" id="buscador-input" placeholder="Buscar producto por nombre..." aria-label="Buscar producto">
+    <div class="catalogo-toggle-wrap">
+      <button id="catalogo-toggle" class="catalogo-toggle" aria-label="Desplegar catálogo" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <span class="catalogo-toggle-text">Desplegar catálogo</span>
     </div>
 
-    <!-- Se muestra solo cuando filtrás por categoría desde arriba, o buscás algo -->
-    <div id="filtro-activo" class="filtro-activo" style="display:none;">
-      <span id="filtro-texto">Mostrando: <strong id="filtro-nombre"></strong></span>
-      <button id="filtro-quitar" type="button">Ver todos ✕</button>
-    </div>
+    <div id="catalogo-showcase" class="catalogo-showcase catalogo-cerrado">
+      <div class="buscador-box">
+        <input type="text" id="buscador-input" placeholder="Buscar producto por nombre..." aria-label="Buscar producto">
+      </div>
 
-    <p id="resultado-count" class="resultado-count"></p>
+      <!-- Se muestra solo cuando filtrás por categoría desde arriba, o buscás algo -->
+      <div id="filtro-activo" class="filtro-activo" style="display:none;">
+        <span id="filtro-texto">Mostrando: <strong id="filtro-nombre"></strong></span>
+        <button id="filtro-quitar" type="button">Ver todos ✕</button>
+      </div>
 
-    <!-- Esta grilla se completa sola con el catálogo definido en productos.js -->
-    <div class="prod-grid" id="prod-grid"></div>
+      <p id="resultado-count" class="resultado-count"></p>
 
-    <div class="cargar-mas-box">
-      <button id="cargar-mas-btn" class="btn-secondary" type="button">Ver más productos</button>
+      <!-- Esta grilla se completa sola con el catálogo definido en productos.js -->
+      <div class="prod-grid" id="prod-grid"></div>
+
+      <div class="cargar-mas-box">
+        <button id="cargar-mas-btn" class="btn-secondary" type="button">Ver más productos</button>
+      </div>
     </div>
   </div>
 </section>

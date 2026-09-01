@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo | Rockeame Nena Accesorios</title>
+<meta name="robots" content="index, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=8">
+<style>
+  .catalogo-hero{
+    padding: 60px 0 20px;
+    border-bottom: 1px solid var(--borde);
+  }
+  .catalogo-head{
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .catalogo-back{
+    display:inline-block;
+    color: var(--plata);
+    text-decoration:none;
+    font-size:.82rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  .catalogo-back:hover{ color: var(--acento); }
+  .catalogo-head .kicker{
+    color: var(--acento); font-weight:700; letter-spacing:.2em;
+    text-transform:uppercase; font-size:.75rem; margin-bottom:12px; display:block;
+  }
+  .catalogo-head h1{ font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom:12px; }
+  .catalogo-head p{ color:#a09da5; font-size:1rem; line-height:1.6; }
+  .catalogo-grid-wrap{ padding: 44px 0 70px; }
+  #catalogo-resultado{ color:#8a8790; font-size:.9rem; text-align:center; margin-top:24px; }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="container nav">
+    <div class="brand-group">
+      <a href="index.html" class="brand">Rockeame Nena</a>
+    </div>
+    <div class="nav-actions">
+      <button id="cart-toggle" class="cart-toggle" aria-label="Abrir carrito">
+        🛒 <span id="cart-count" class="cart-count">0</span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<section class="catalogo-hero">
+  <div class="container">
+    <div class="catalogo-head">
+      <a class="catalogo-back" href="index.html#productos">← Volver al catálogo completo</a>
+      <span class="kicker" id="catalogo-rubro">Catálogo</span>
+      <h1 id="catalogo-titulo"></h1>
+      <p id="catalogo-descripcion"></p>
+    </div>
+  </div>
+</section>
+
+<section class="catalogo-grid-wrap">
+  <div class="container">
+    <div class="buscador-box">
+      <input type="text" id="catalogo-buscador" placeholder="Buscar en esta categoría..." aria-label="Buscar en esta categoría">
+    </div>
+
+    <div class="prod-grid" id="prod-grid"></div>
+    <p id="catalogo-resultado"></p>
+    <div class="cargar-mas-box">
+      <button id="cargar-mas-btn" class="btn-secondary" type="button">Ver más productos</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== IMAGEN AMPLIADA (lightbox) ===================== -->
+<div id="lightbox-overlay" class="cart-overlay"></div>
+
+<div id="lightbox-modal" class="lightbox-modal">
+  <button id="lightbox-close" class="lightbox-close" aria-label="Cerrar">✕</button>
+  <div id="lightbox-content" class="lightbox-content"></div>
+  <p id="lightbox-nombre" class="lightbox-nombre"></p>
+</div>
+
+<!-- ===================== CARRITO (drawer lateral) ===================== -->
+<div id="cart-overlay" class="cart-overlay"></div>
+
+<aside id="cart-drawer" class="cart-drawer">
+  <div class="cart-drawer-head">
+    <h3>Tu carrito</h3>
+    <button id="cart-close" class="cart-close" aria-label="Cerrar carrito">✕</button>
+  </div>
+
+  <div id="cart-items" class="cart-items">
+    <p class="cart-empty">Todavía no agregaste productos.</p>
+  </div>
+
+  <div class="cart-drawer-foot">
+    <div class="cart-total-row">
+      <span>Total</span>
+      <span id="cart-total">$0</span>
+    </div>
+    <button id="cart-checkout-btn" class="form-submit" disabled>Finalizar pedido</button>
+  </div>
+</aside>
+
+<!-- ===================== CHECKOUT ===================== -->
+<div id="checkout-overlay" class="cart-overlay"></div>
+
+<div id="checkout-modal" class="checkout-modal">
+  <div class="checkout-head">
+    <h3>Finalizar pedido</h3>
+    <button id="checkout-close" class="cart-close" aria-label="Cerrar">✕</button>
+  </div>
+
+  <form id="checkout-form">
+    <div class="form-group">
+      <label for="co-nombre">Nombre y apellido</label>
+      <input id="co-nombre" type="text" placeholder="Tu nombre" required>
+    </div>
+    <div class="form-group">
+      <label for="co-telefono">Teléfono</label>
+      <input id="co-telefono" type="tel" placeholder="Ej: 11 3228-3924" required>
+    </div>
+    <div class="form-group">
+      <label for="co-pago">Método de pago</label>
+      <select id="co-pago" required>
+        <option value="" disabled selected>Elegí una opción</option>
+        <option value="Efectivo">Efectivo</option>
+        <option value="Transferencia">Transferencia bancaria</option>
+        <option value="Tarjeta de débito/crédito">Tarjeta de débito/crédito</option>
+        <option value="Mercado Pago">Mercado Pago</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="co-entrega">Entrega</label>
+      <select id="co-entrega" required>
+        <option value="" disabled selected>Elegí una opción</option>
+        <option value="Retiro en local">Retiro en local</option>
+        <option value="Envío a domicilio">Envío a domicilio</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="co-direccion">Dirección (si es envío)</label>
+      <input id="co-direccion" type="text" placeholder="Calle, número, ciudad">
+    </div>
+    <div class="form-group">
+      <label for="co-notas">Notas adicionales</label>
+      <textarea id="co-notas" rows="2" placeholder="Aclaraciones sobre tu pedido"></textarea>
+    </div>
+
+    <button type="submit" class="form-submit">Comprar por WhatsApp</button>
+  </form>
+</div>
+
+<script src="Productos.js"></script>
+<script src="catalogo.js"></script>
+</body>
+</html>
