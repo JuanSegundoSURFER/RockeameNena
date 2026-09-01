@@ -20,15 +20,10 @@ const filtroActivo     = document.getElementById("filtro-activo");
 const filtroTexto      = document.getElementById("filtro-texto");
 const filtroNombre     = document.getElementById("filtro-nombre");
 const filtroQuitarBtn  = document.getElementById("filtro-quitar");
-const catGrid          = document.querySelector(".cat-grid");
 const buscadorInput    = document.getElementById("buscador-input");
 const resultadoCount   = document.getElementById("resultado-count");
 const cargarMasBtn     = document.getElementById("cargar-mas-btn");
 const cargarMasBox     = document.querySelector(".cargar-mas-box");
-const rubroDetalle     = document.querySelector(".rubro-detalle");
-const rubroDetalleKicker = rubroDetalle ? rubroDetalle.querySelector(".kicker") : null;
-const rubroDetalleTitulo = rubroDetalle ? rubroDetalle.querySelector("h3") : null;
-const catCards         = document.querySelectorAll(".cat-card");
 
 let categoriaActual = null;  // null = todas las categorías
 let busquedaActual  = "";    // texto del buscador
@@ -64,53 +59,6 @@ function normalizar(texto) {
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, ""); // saca tildes para que "muñeca" y "muneca" matcheen
-}
-
-function mostrarCategoriasPorRubro(rubro) {
-  const grupo = rubro === "indumentaria" ? "indumentaria" : "moda";
-
-  catCards.forEach((card) => {
-    const cardGrupo = card.dataset.rubroGrupo || "moda";
-    if (cardGrupo === grupo) {
-      card.classList.remove("oculto");
-    } else {
-      card.classList.add("oculto");
-    }
-  });
-
-  if (rubroDetalleKicker) {
-    rubroDetalleKicker.textContent = rubro === "indumentaria" ? "Indumentaria" : "Accesorios Moda";
-  }
-
-  if (rubroDetalleTitulo) {
-    rubroDetalleTitulo.textContent = rubro === "indumentaria"
-      ? "Catálogo de Indumentaria"
-      : "Catálogo de Accesorios Moda";
-  }
-
-  document.querySelectorAll(".rubro-card").forEach((rubroCard) => {
-    rubroCard.classList.toggle("rubro-activo", rubroCard.dataset.rubro === rubro);
-  });
-
-  // Recordamos el rubro elegido (así al volver de una categoría queda seleccionado)
-  sessionStorage.setItem("rn-rubro", rubro);
-}
-
-// Al cargar, restauramos el rubro que quedó seleccionado la última vez
-// (así si volvés de una categoría de indumentaria queda elegida indumentaria).
-{
-  const rubroGuardado = sessionStorage.getItem("rn-rubro");
-  const rubroInicial = rubroGuardado === "indumentaria" ? "indumentaria" : "moda";
-  mostrarCategoriasPorRubro(rubroInicial);
-
-  // Si hay un rubro guardado (estás volviendo), bajamos hasta la sección de
-  // categorías para que veas el catálogo con ese rubro seleccionado.
-  if (rubroGuardado === "moda" || rubroGuardado === "indumentaria") {
-    const secCategorias = document.querySelector(".categorias");
-    if (secCategorias) {
-      setTimeout(() => secCategorias.scrollIntoView({ behavior: "smooth", block: "start" }), 60);
-    }
-  }
 }
 
 function productosFiltrados() {
@@ -267,25 +215,19 @@ function quitarFiltro() {
   renderProductos();
 }
 
-// Click en una tarjeta de categoría -> abre esa categoría en su propia página
-catGrid.addEventListener("click", (e) => {
-  const card = e.target.closest(".cat-card");
-  if (!card) return;
-  const categoria = card.dataset.categoria;
-  window.location.href = `catalogo.html?categoria=${encodeURIComponent(categoria)}`;
-});
-
-// Click en cualquiera de los rubros -> baja suave hasta sus categorías
-// para ver cómo se ve la sección al interactuar con el catálogo.
+// Click en un rubro -> abre la página con los catálogos del rubro
 document.querySelectorAll(".rubro-card").forEach((rubro) => {
   rubro.addEventListener("click", () => {
     const grupo = rubro.dataset.rubro;
     if (grupo === "moda" || grupo === "indumentaria") {
-      mostrarCategoriasPorRubro(grupo);
+      window.location.href = `catalogo.html?rubro=${grupo}`;
+      return;
     }
 
-    if (rubroDetalle) {
-      rubroDetalle.scrollIntoView({ behavior: "smooth", block: "start" });
+    // ride-on / home-rock: aún no tienen catálogos
+    const secProductos = document.getElementById("productos");
+    if (secProductos) {
+      secProductos.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   });
 });

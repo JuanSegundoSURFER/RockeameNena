@@ -35,8 +35,38 @@
   }
   .catalogo-head h1{ font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom:12px; }
   .catalogo-head p{ color:#a09da5; font-size:1rem; line-height:1.6; }
-  .catalogo-grid-wrap{ padding: 44px 0 70px; }
+
+  /* Catálogos del rubro acomodados uno al lado del otro */
+  .catalogo-rubros{ padding: 40px 0 10px; }
+  .catalogo-cat-list{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:20px;
+  }
+  .catalogo-cat-list .cat-card{
+    width:190px;
+    aspect-ratio: 3/4;
+    flex-shrink:0;
+  }
+  .catalogo-cat-list .cat-card.activo{ border-color: var(--acento); box-shadow: 0 0 0 1px var(--acento); }
+
+  /* Encabezado "Estás en: [catálogo]" */
+  .catalogo-productos{ padding: 40px 0 70px; }
+  .catalogo-actual{
+    display:none;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:30px;
+    text-align:center;
+  }
+  .catalogo-actual.visible{ display:flex; }
+  .catalogo-actual span{ color:#a09da5; font-size:.8rem; text-transform:uppercase; letter-spacing:.12em; }
+  .catalogo-actual strong{ color: var(--acento); font-size:1.05rem; text-transform:uppercase; letter-spacing:.06em; }
   #catalogo-resultado{ color:#8a8790; font-size:.9rem; text-align:center; margin-top:24px; }
+  .buscador-box, .cargar-mas-box{ display:none; }
+  .buscador-box.visible, .cargar-mas-box.visible{ display:block; }
 </style>
 </head>
 <body>
@@ -57,23 +87,38 @@
 <section class="catalogo-hero">
   <div class="container">
     <div class="catalogo-head">
-      <a class="catalogo-back" href="index.html#productos">← Volver al catálogo completo</a>
+      <a class="catalogo-back" href="index.html#categorias">← Volver a categorías</a>
       <span class="kicker" id="catalogo-rubro">Catálogo</span>
       <h1 id="catalogo-titulo"></h1>
-      <p id="catalogo-descripcion"></p>
+      <p id="catalogo-descripcion">Elegí un catálogo para ver sus productos.</p>
     </div>
   </div>
 </section>
 
-<section class="catalogo-grid-wrap">
+<!-- Catálogos del rubro, uno al lado del otro -->
+<section class="catalogo-rubros">
   <div class="container">
-    <div class="buscador-box">
-      <input type="text" id="catalogo-buscador" placeholder="Buscar en esta categoría..." aria-label="Buscar en esta categoría">
+    <div class="catalogo-cat-list" id="catalogo-cat-list">
+      <!-- Se completan sola con los catálogos del rubro -->
+    </div>
+  </div>
+</section>
+
+<!-- Productos del catálogo elegido -->
+<section class="catalogo-productos" id="catalogo-productos">
+  <div class="container">
+    <div class="catalogo-actual" id="catalogo-actual">
+      <span>Estás en:</span>
+      <strong id="catalogo-actual-nombre"></strong>
+    </div>
+
+    <div class="buscador-box" id="catalogo-buscador-box">
+      <input type="text" id="catalogo-buscador" placeholder="Buscar en este catálogo..." aria-label="Buscar en este catálogo">
     </div>
 
     <div class="prod-grid" id="prod-grid"></div>
     <p id="catalogo-resultado"></p>
-    <div class="cargar-mas-box">
+    <div class="cargar-mas-box" id="catalogo-cargar-box">
       <button id="cargar-mas-btn" class="btn-secondary" type="button">Ver más productos</button>
     </div>
   </div>

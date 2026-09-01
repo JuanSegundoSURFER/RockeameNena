@@ -1,80 +1,91 @@
 /* =====================================================================
    ROCKEAME NENA ACCESORIOS - catalogo.js
    =====================================================================
-   Página de catálogo filtrado por categoría (catalogo.html).
-   Lee la categoría del query string (?categoria=...), dibuja SOLO las
-   tarjetas de esa categoría y mantiene el carrito/compras funcionando
-   igual que en la página principal (index.html + script.js).
+   Página de catálogo por rubro (catalogo.html).
+   Lee el rubro del query string (?rubro=moda|indumentaria), muestra los
+   catálogos de ese rubro uno al lado del otro. Al clickear un catálogo,
+   despliega sus productos en la misma página y muestra en cuál estás.
+   Mantiene el carrito/compras igual que en la página principal.
    ===================================================================== */
 
-const prodGrid        = document.getElementById("prod-grid");
-const cargarMasBtn    = document.getElementById("cargar-mas-btn");
-const cargarMasBox    = document.querySelector(".cargar-mas-box");
-const resultadoLabel  = document.getElementById("catalogo-resultado");
+const rubroInfo = {
+  moda: {
+    titulo: "Accesorios Moda",
+    cat: [
+      { nombre: "Colgantes y cadenas de acero", img: "colgantesLOGO.jpeg" },
+      { nombre: "Anillos de acero",             img: "anillosLOGO.jpeg" },
+      { nombre: "Aros de acero",                img: "arosLOGO.jpeg" },
+      { nombre: "Cuero",                        img: "cueroLOGO.jpeg" },
+      { nombre: "Pulseras",                     img: "pulserasLOGO.jpeg" },
+    ],
+  },
+  indumentaria: {
+    titulo: "Indumentaria",
+    cat: [
+      { nombre: "Remera personalizada",                img: "remera-personalizada.jpeg" },
+      { nombre: "Remeras Mujer",                       img: "remeras-mujer.jpeg" },
+      { nombre: "Remeras Corte Clásico Unisex",        img: "remeras-unisex.jpeg" },
+    ],
+  },
+};
+
+/* ---------- Parámetros de la URL ---------- */
+const params = new URLSearchParams(window.location.search);
+let rubroActual = params.get("rubro");
+let categoriaInicial = (params.get("categoria") || "").trim();
+
+// Compatibilidad: si venimos con ?categoria=, inferimos el rubro
+if (!rubroActual && categoriaInicial) {
+  rubroActual = ["Remera personalizada","Remeras Mujer","Remeras Corte Clásico Unisex"].includes(categoriaInicial)
+    ? "indumentaria"
+    : "moda";
+}
+if (rubroActual !== "indumentaria") rubroActual = "moda";
+
+/* ---------- Referencias ---------- */
+const listaCatEl      = document.getElementById("catalogo-cat-list");
 const tituloEl        = document.getElementById("catalogo-titulo");
 const rubroEl         = document.getElementById("catalogo-rubro");
-const descripcionEl   = document.getElementById("catalogo-descripcion");
+const prodGrid        = document.getElementById("prod-grid");
+const cargarMasBtn    = document.getElementById("cargar-mas-btn");
+const cargarMasBox    = document.getElementById("catalogo-cargar-box");
+const buscarBox       = document.getElementById("catalogo-buscador-box");
 const buscadorInput   = document.getElementById("catalogo-buscador");
+const resultadoLabel  = document.getElementById("catalogo-resultado");
+const actualBox       = document.getElementById("catalogo-actual");
+const actualNombre    = document.getElementById("catalogo-actual-nombre");
 
-const LOTE = 24;             // cuántos productos se muestran por tanda
+const LOTE = 24;
 let cantidadVisible = LOTE;
-let busquedaCatalogo = "";   // texto del buscador de esta categoría
+let categoriaSeleccionada = null;
+let busquedaCatalogo = "";
 
 function normalizar(texto) {
-  return texto
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
+  return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
-/* ---------- Categoría desde la URL ---------- */
-const params = new URLSearchParams(window.location.search);
-const categoriaActual = (params.get("categoria") || "").trim();
+/* ---------- Encabezado según el rubro ---------- */
+const infoRubro = rubroInfo[rubroActual];
+if (tituloEl) tituloEl.textContent = infoRubro.titulo;
+if (rubroEl) rubroEl.textContent = "Catálogo";
 
-function categoriaEsIndumentaria(cat) {
-  const i = ["Remera personalizada","Remeras Mujer","Remeras Corte Clásico Unisex"];
-  return i.includes(cat);
+/* ---------- Render de los catálogos (uno al lado del otro) ---------- */
+function renderCatalogoList() {
+  listaCatEl.innerHTML = "";
+  infoRubro.cat.forEach((c) => {
+    const card = document.createElement("div");
+    card.className = "cat-card";
+    card.dataset.categoria = c.nombre;
+    card.innerHTML = `<img class="ico" src="Otras%20imgs/${encodeURIComponent(c.img)}" alt="${c.nombre}" loading="lazy">`;
+    listaCatEl.appendChild(card);
+  });
 }
 
-function descripcionCategoria(cat) {
-  const rimas = {
-    "Colgantes y cadenas de acero": "Colgantes y cadenas en acero con actitud.",
-    "Anillos de acero": "Anillos de acero para tu estilo.",
-    "Aros de acero": "Aros de acero para completar tu look.",
-    "Cuero": "Brazaletes y accesorios en cuero.",
-    "Pulseras": "Pulseras de acero y más.",
-    "Remera personalizada": "Diseño a medida para vos."
-  };
-  return rimas[cat] || "Explorá los productos de esta categoría.";
-}
-
-/* ---------- Ruta de imágenes ---------- */
-function rutaImagen(producto, archivo) {
-  const carpeta = CARPETA_POR_CATEGORIA[producto.categoria] || "";
-  return `${CARPETA_IMAGENES}/${carpeta}/${archivo}`;
-}
-
-function archivoImagenPara(producto, variante) {
-  if (producto.imagenesPorVariante && variante && producto.imagenesPorVariante[variante]) {
-    return producto.imagenesPorVariante[variante];
-  }
-  return producto.imagen;
-}
-
-function imagenDebeQuedarFija(producto) {
-  return [
-    "prod-403-r","prod-403-g","prod-403-c","prod-403-f","prod-403-b2",
-    "prod-403-c2","prod-403-e","prod-403-c3","prod-403-c4","prod-403-p1",
-    "prod-401-mb","prod-401-za1","prod-407-fc","prod-407-b","prod-407-a",
-    "prod-411-ab"
-  ].includes(producto.id);
-}
-
-/* ---------- Render ---------- */
+/* ---------- Mostrar los productos del catálogo elegido ---------- */
 function renderProductos() {
-  let lista = categoriaActual
-    ? PRODUCTOS.filter((p) => p.categoria === categoriaActual)
-    : PRODUCTOS;
+  let lista = categoriaSeleccionada
+    ? PRODUCTOS.filter((p) => p.categoria === categoriaSeleccionada)
+    : [];
 
   if (busquedaCatalogo.trim() !== "") {
     const q = normalizar(busquedaCatalogo);
@@ -88,7 +99,7 @@ function renderProductos() {
   if (lista.length === 0) {
     prodGrid.innerHTML = '<p class="sin-resultados">No encontramos productos con ese criterio.</p>';
     resultadoLabel.textContent = "";
-    cargarMasBox.classList.add("oculto");
+    cargarMasBox.classList.remove("visible");
     return;
   }
 
@@ -156,19 +167,42 @@ function renderProductos() {
 
   resultadoLabel.textContent = `Mostrando ${productosAMostrar.length} de ${lista.length} productos`;
 
-  if (cantidadVisible < lista.length) {
-    cargarMasBox.classList.remove("oculto");
-  } else {
-    cargarMasBox.classList.add("oculto");
+  cargarMasBox.classList.toggle("visible", cantidadVisible < lista.length);
+}
+
+/* ---------- Desplegar un catálogo ---------- */
+function abrirCatalogo(categoria, scroll) {
+  categoriaSeleccionada = categoria;
+  busquedaCatalogo = "";
+  if (buscadorInput) buscadorInput.value = "";
+  cantidadVisible = LOTE;
+
+  // Marca activo solo el catálogo elegido
+  listaCatEl.querySelectorAll(".cat-card").forEach((c) => {
+    c.classList.toggle("activo", c.dataset.categoria === categoria);
+  });
+
+  // Muestra "Estás en: [catálogo]"
+  if (actualNombre) actualNombre.textContent = categoria;
+  if (actualBox) actualBox.classList.add("visible");
+  if (buscarBox) buscarBox.classList.add("visible");
+
+  renderProductos();
+
+  if (scroll) {
+    const dest = document.getElementById("catalogo-productos");
+    if (dest) dest.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 }
 
-cargarMasBtn.addEventListener("click", () => {
-  cantidadVisible += LOTE;
-  renderProductos();
+/* ---------- Click en un catálogo: despliega productos en la misma página ---------- */
+listaCatEl.addEventListener("click", (e) => {
+  const card = e.target.closest(".cat-card");
+  if (!card) return;
+  abrirCatalogo(card.dataset.categoria, true);
 });
 
-// Buscador dentro de la categoría
+/* ---------- Buscador dentro del catálogo elegido ---------- */
 let buscadorTimeout;
 if (buscadorInput) {
   buscadorInput.addEventListener("input", (e) => {
@@ -181,35 +215,24 @@ if (buscadorInput) {
   });
 }
 
-/* ---------- Encabezado según la categoría ---------- */
-if (tituloEl) {
-  tituloEl.textContent = categoriaActual || "Todos los productos";
-}
-if (rubroEl) {
-  rubroEl.textContent = categoriaEsIndumentaria(categoriaActual) ? "Indumentaria" : "Accesorios Moda";
-}
-if (descripcionEl) {
-  descripcionEl.textContent = descripcionCategoria(categoriaActual);
-}
+cargarMasBtn.addEventListener("click", () => {
+  cantidadVisible += LOTE;
+  renderProductos();
+});
 
-// La flecha de volver vuelve a donde estuviste por última vez
-// (history.back). Si no hay historial (entraste directo a la URL),
-// cae por defecto al catálogo completo de la home.
-const backLink = document.querySelector(".catalogo-back");
-if (backLink) {
-  backLink.addEventListener("click", (e) => {
-    if (window.history.length > 1) {
-      e.preventDefault();
-      history.back();
-    }
-  });
+/* ---------- Inicio ---------- */
+renderCatalogoList();
+
+// Si venimos con ?categoria=... (o ?rubro=...&categoria=...), abrimos ese catálogo
+if (categoriaInicial && categoriaInicial !== "null") {
+  abrirCatalogo(categoriaInicial, true);
 }
 
 /* =====================================================================
    CARRITO (igual que en la página principal)
    ===================================================================== */
 
-let carrito = []; // cada item: { key, id, nombre, variante, precio, cantidad }
+let carrito = [];
 
 const cartToggle      = document.getElementById("cart-toggle");
 const cartDrawer       = document.getElementById("cart-drawer");
@@ -328,6 +351,28 @@ function cerrarCarrito() {
   cartDrawer.classList.remove("active");
   cartOverlay.classList.remove("active");
   setBodyScrollLock(false);
+}
+
+// Ruta de imágenes
+function rutaImagen(producto, archivo) {
+  const carpeta = CARPETA_POR_CATEGORIA[producto.categoria] || "";
+  return `${CARPETA_IMAGENES}/${carpeta}/${archivo}`;
+}
+
+function archivoImagenPara(producto, variante) {
+  if (producto.imagenesPorVariante && variante && producto.imagenesPorVariante[variante]) {
+    return producto.imagenesPorVariante[variante];
+  }
+  return producto.imagen;
+}
+
+function imagenDebeQuedarFija(producto) {
+  return [
+    "prod-403-r","prod-403-g","prod-403-c","prod-403-f","prod-403-b2",
+    "prod-403-c2","prod-403-e","prod-403-c3","prod-403-c4","prod-403-p1",
+    "prod-401-mb","prod-401-za1","prod-407-fc","prod-407-b","prod-407-a",
+    "prod-411-ab"
+  ].includes(producto.id);
 }
 
 prodGrid.addEventListener("change", (e) => {
@@ -518,5 +563,4 @@ checkoutForm.addEventListener("submit", (e) => {
   checkoutForm.reset();
 });
 
-renderProductos();
 renderCarrito();
