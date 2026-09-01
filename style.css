@@ -110,8 +110,8 @@
     position:relative;
     padding: 110px 0 0;
     min-height: 620px;
-    background: var(--blanco);
-    color: var(--negro);
+    background: #ffffff !important;
+    color: #0A0A0A !important;
     overflow: hidden;
   }
   .hero .container{
